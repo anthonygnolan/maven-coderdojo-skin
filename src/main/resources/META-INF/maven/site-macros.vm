@@ -472,3 +472,33 @@
     </script>
 #**##end
 #end
+
+#macro ( sideBar $menus )
+<ol id="toc-menu" class="u-hidden">
+  #foreach( $menu in $menus )
+    #if( $currentMenu == "Project Documentation" )
+      #foreach( $item in $menu.items)
+        #if( $currentItem == $item.name)
+          #foreach( $subItem in$item.items)
+            #if( $currentSubItem == $subItem.name)
+              <li class="sushi-card-item current-sushi-card">
+            #else
+              <li class="sushi-card-item">
+            #end
+              <a href="$subItem.href">
+                <p>$subItem.name</p>
+                <img class="sushi-card-item-img" src="https://coderdojokinsale.com/wp-content/themes/coderdojo/assets/images/sushi-card-current-middle.png" width="24" height="42">
+              </a>
+            </li>
+          #end
+        #end
+      #end
+    #elseif( $currentMenu == $menu.name )
+      #foreach( $item in $menu.items)
+      <a>$item.name</a>ß
+      #end
+    #else
+    #end
+  #end
+</ol>
+#end

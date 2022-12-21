@@ -1,0 +1,61 @@
+#macro ( link $href $name $target $img $position $alt $border $width $height $title )
+  #**##set ( $linkTitle = ' title="' + $name + '"' )
+  #**##if( $target )
+  #*  *##set ( $linkTarget = ' target="' + $target + '"' )
+  #**##else
+  #*  *##set ( $linkTarget = "" )
+  #**##end
+  #**##if ( $decoration.isLink( $href ) )
+  #*  *##set ( $linkClass = ' class="externalLink"' )
+  #**##else
+  #*  *##set ( $linkClass = "" )
+  #**##end
+  #**##if ( $img )
+  #*  *##if ( $position == "left" )
+    #*    *#<a href="$href"$linkClass$linkTarget$linkTitle>#image($img $alt $border $width $height $title)$name</a>##
+    #*  *##else
+    #*    *#<a href="$href"$linkClass$linkTarget$linkTitle>$name #image($img $alt $border $width $height $title)</a>##
+    #*  *##end
+  #**##else
+  #*  *#<a href="$href"$linkClass$linkTarget$linkTitle>$name</a>##
+  #**##end
+#end
+
+#macro ( headerMenu $menus )
+  <ul id="desktop-menu" class="header-menu">
+    #foreach( $menu in $menus )
+      #if ( $menu.name == "Project Documentation" )
+        #foreach( $item in $menu.items )
+          #set ( $collapse = "none" )
+          #set ( $currentItemHref = $PathTool.calculateLink( $item.href, $relativePath ) )
+          #set ( $subItemHref = $PathTool.calculateLink( $item.items[0].href, $relativePath ) )
+          #set ( $subItemHref = $subItemHref.replaceAll( '\\', '/' ) )
+          <li class="menu-item">
+            #if ( $alignedFileName == $currentItemHref )
+              <a>$item.name</a>
+              #set ( $currentMenu = $menu.name )
+              #set ( $currentItem = $item.name )
+
+            #else
+
+              #link( $subItemHref $item.name $item.target $item.img $item.position $item.alt $item.border $item.width $item.height $item.title )
+            #end
+          </li>
+          #foreach( $subitem in $item.items )
+            #set ( $currentItemHref = $PathTool.calculateLink( $subitem.href, $relativePath ) )
+            #set ( $currentItemHref = $currentItemHref.replaceAll( '\\', '/' ) )
+            #if ( $alignedFileName == $currentItemHref )
+              #set ( $currentMenu = $menu.name )
+              #set ( $currentItem = $item.name )
+              #set ( $currentSubItem = $subitem.name )
+            #end
+          #end
+        #end
+      #else
+        <li class="menu-item">
+          #link( $menu.items[0].href $menu.name $item.target $item.img $item.position $item.alt $item.border $item.width $item.height $item.title )
+        </li>
+      #end
+    #end
+  </ul>
+#end
