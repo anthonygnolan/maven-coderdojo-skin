@@ -1,0 +1,8 @@
+<footer id="footer" class="site-footer">
+  <div id="footer-wrapper" class="wrapper spacer">
+    <a class="site-logo custom-logo-link" href="index.html">
+      <img class="site-icon custom-logo"  src="$relativePath/images/site-icon.png" alt="Site Icon" />
+      <h1 id="site-title" class="custom-logo-title">CoderDojo</h1>
+    </a>
+  </div>
+</footer>
